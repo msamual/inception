@@ -1,10 +1,12 @@
 version: "3"
 
 networks:
-    inception_net:
+  inception:
 
 services:
   nginx:
+    networks:
+      - inception
     build:
       context: requirements/nginx/
     env_file:
@@ -13,10 +15,12 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./www:/var/www/html
+      - wp_volume:/var/www/html
     restart: always
   
   wordpress:
+    networks:
+      - inception
     build: 
       context: requirements/wordpress/
     env_file:
@@ -24,29 +28,31 @@ services:
     ports:
       - 9000:9000
     volumes:
-      - ./www:/var/www/html
+      - wp_volume:/var/www/html
     restart: always
 
   mariadb:
+    networks:
+      - inception
     build:
       context: requirements/mariadb/
     ports:
       - 3306:3306
     volumes:
-      - ./db:/var/lib/mysql
+      - db_volume:/var/lib/mysql
     container_name: mariadb
     restart: always
 
-# volumes:
-#     wp_volume:
-#         driver: local
-#         driver_opts:
-#             type: 'none'
-#             o: 'bind'
-#             device: '/home/msamual/data/wp'
-#     db_volume:
-#         driver: local
-#         driver_opts:
-#             type: 'none'
-#             o: 'bind'
-#             device: '/home/msamual/data/mariadb'
+volumes:
+    wp_volume:
+        driver: local
+        driver_opts:
+            type: 'none'
+            o: 'bind'
+            device: '/home/msamual/data/wp'
+    db_volume:
+        driver: local
+        driver_opts:
+            type: 'none'
+            o: 'bind'
+            device: '/home/msamual/data/mariadb'

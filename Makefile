@@ -13,7 +13,7 @@ down:
 ps:
 	${SRC} ps
 
-clean: down
+clean:
 	rm -rf srcs/www
 	rm -rf srcs/db
 
