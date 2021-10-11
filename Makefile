@@ -14,7 +14,7 @@ ps:
 	${SRC} ps
 
 clean:
-	rm -rf srcs/www
-	rm -rf srcs/db
+	rm -rf srcs/$(WP_VOL)
+	rm -rf srcs/$(DB_VOL)
 
 re: clean all
