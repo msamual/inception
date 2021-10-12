@@ -2,8 +2,8 @@ include srcs/.env
 SRC = cd srcs && docker-compose -f ./docker-compose.yml 
 all :
 	cd srcs && docker-compose up --build
-	mkdir -p srcs/$(DB_VOL)
-	mkdir -p srcs/$(WP_VOL)
+	mkdir -p $(DB_VOL)
+	mkdir -p $(WP_VOL)
 up :
 	${SRC} up -d
 start:
@@ -14,7 +14,7 @@ ps:
 	${SRC} ps
 
 clean:
-	rm -rf srcs/$(WP_VOL)
-	rm -rf srcs/$(DB_VOL)
+	rm -rf $(WP_VOL)
+	rm -rf $(DB_VOL)
 
 re: clean all
