@@ -1,23 +1,9 @@
-version: "3.3"
+version: "3"
 
 networks:
   inception:
 
 services:
-  mariadb:
-    networks:
-      - inception
-    build:
-      context: requirements/mariadb/
-    env_file:
-      - .env
-    ports:
-      - 3306:3306
-    volumes:
-      - /home/msamual/data/db:/var/lib/mysql
-    container_name: mariadb
-    restart: always
-
   nginx:
     networks:
       - inception
@@ -29,9 +15,9 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - /home/msamual/data/wp:/var/www/html
+      - $WP_VOL:/var/www/html
     restart: always
-
+  
   wordpress:
     networks:
       - inception
@@ -39,10 +25,20 @@ services:
       context: requirements/wordpress/
     env_file:
       - .env
-    depends_on:
-      - mariadb
     ports:
       - 9000:9000
     volumes:
-      - /home/msamual/data/wp:/var/www/html
+      - $WP_VOL:/var/www/html
+    restart: always
+
+  mariadb:
+    networks:
+      - inception
+    build:
+      context: requirements/mariadb/
+    ports:
+      - 3306:3306
+    volumes:
+      - $DB_VOL:/var/lib/mysql
+    container_name: mariadb
     restart: always

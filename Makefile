@@ -1,9 +1,10 @@
 include srcs/.env
 SRC = cd srcs && docker-compose -f ./docker-compose.yml 
 all :
-	cd srcs && docker-compose up --build
 	mkdir -p $(DB_VOL)
+	cp -r srcs/requirements/mariadb/db/* $(DB_VOL)
 	mkdir -p $(WP_VOL)
+	cd srcs && docker-compose up --build
 up :
 	${SRC} up -d
 start:
