@@ -16,7 +16,7 @@ services:
       - 443:443
     volumes:
       - $WP_VOL:/var/www/html
-    restart: always
+    restart: unless-stopped
   
   wordpress:
     networks:
@@ -29,7 +29,7 @@ services:
       - 9000:9000
     volumes:
       - $WP_VOL:/var/www/html
-    restart: always
+    restart: unless-stopped
 
   mariadb:
     networks:
@@ -41,4 +41,4 @@ services:
     volumes:
       - $DB_VOL:/var/lib/mysql
     container_name: mariadb
-    restart: always
+    restart: unless-stopped
