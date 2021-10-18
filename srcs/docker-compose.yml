@@ -16,6 +16,7 @@ services:
       - 443:443
     volumes:
       - $WP_VOL:/var/www/html
+    container_name: nginx
     restart: unless-stopped
   
   wordpress:
@@ -29,6 +30,7 @@ services:
       - 9000:9000
     volumes:
       - $WP_VOL:/var/www/html
+    container_name: wordpress
     restart: unless-stopped
 
   mariadb:
